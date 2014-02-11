@@ -9,8 +9,9 @@ The mr.ynk package hosted in this repo is a part of our internal as3 library her
 
 Likely the most important class in this package is mr.ynk.display.DisplayListTools. It is an easy to use, standalone class that helps you with some management of Flash' displaylist. As an example: I hated the fact that the flash player would throw an error when I try to remove a DisplayObject from the displaylist that isn't actually on the displaylist (anymore). Mainly this frustration got me to writing this class.
 
-Usage
---------
+adding children to the displaylist
+-----
+
 Some simple functions first. 
 ```
 DisplayListTools.addChildren 
@@ -20,7 +21,7 @@ Will add DisplayObjects to a DisplayObjectContainer. It accepts both a single Di
 (Something I often do, is assigning my objects to a variable within this function).
 ```ActionScript
 DisplayListTools.addChildren( this, 
-	_mySprite = new Sprite();
+	_mySprite = new Sprite()
 );
 ```
 and:
@@ -38,15 +39,21 @@ DisplayListTools.addChildren( this,
 //obviously, this specific example is kind of weird, 
 //as in this case you might just as well add the DisplayObjects within the for loop.
 ```
-And a more extreme example:
-(the function accepts multiple arguments)
+Another example:
+(the function accepts multiple arguments, arguments should be either an Array of (Arrays of) DisplayObjects, or DisplayObjects)
 ```ActionScript
+var someObjects:Array = [ new Sprite(), new Sprite() ];
+var otherObjects:Array = [ [ new Sprite(), new Sprite() ], new Sprite(), [ new Sprite() ] ];
+
 DisplayListTools.addChildren( this,
-    [ new Sprite(), new Sprite() ],
+    someObjects,
     new Sprite(),
-    [ [ new Sprite(), new Sprite() ], new Sprite(), [ new Sprite() ] ]
+    otherObjects
 );
 ```
+
+removing children from the displaylist
+---------------------------------------------
 
 And when it comes to removing DisplayObjects, without having to worry about errors:
 ```Actionscript
@@ -54,10 +61,15 @@ DisplayListTools.removeFromDisplayList( myDisplayObject );
 //removes myDisplayObject from the displaylist, where ever it is.
 
 DisplayListTools.removeAllChildren( this );
-//removes all displayobjects within "this"
+//removes all DisplayObjects within "this"
+
+DisplayListTools.removeChildren( [ someObject, anotherObject ], andOneMoreObject );
+//removes these DisplayObjects from the displaylist, where ever they are.
 ```
 
-DisplayListTools.getChildren* comes in three different variants. It helps you to select specific children within a container. It will find all (nested) children of the specified type. It will always return an Array of the children that were found.
+selecting children
+---------------------------------------------
+DisplayListTools.getChildrenBy* comes in three different variants. It helps you to select specific children within a container. It will find all (nested) children of the specified type. It will always return an Array of the children that were found.
 ```ActionScript
 var myDisplayObjects:Array = DisplayListTools.getChildrenByName( this, 'some_name' );
 //will return all (nested) DisplayObjects within "this" that have the name: 'some_name';
@@ -71,3 +83,6 @@ var myDisplayObjects:Array = DisplayListTools.getChildrenByType( this, MySpecial
 //will return all (nested) DisplayObjects within "this" that are an instance of MySpecialObject
 ```
 There is more. I'll be updating soon!
+
+----------
+
